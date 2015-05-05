@@ -36,7 +36,7 @@ prop_new = once . testIO $
 --
 
 prop_pull = once . testIO $
-  newPin >>= \p -> pullPin p >>checkPin p >>= pure . (===) True
+  newPin >>= \p -> pullPin p >> checkPin p >>= pure . (===) True
 
 
 --
