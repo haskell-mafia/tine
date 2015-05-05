@@ -32,8 +32,10 @@ library
 
 
   exposed-modules:     Tine
+                       Tine.Data.Duration
                        Tine.Data.Pin
                        Tine.Process
+                       Tine.Snooze
 
 test-suite test
   type:                exitcode-stdio-1.0
