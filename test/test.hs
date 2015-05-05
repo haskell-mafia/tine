@@ -1,7 +1,9 @@
-module Main where
-
 import           Orphanarium.Core.Main
+
+import qualified Test.Tine.Data.Pin
 
 main :: IO ()
 main =
-  orphanariumMain []
+  orphanariumMain [
+      Test.Tine.Data.Pin.tests
+    ]
