@@ -32,6 +32,8 @@ library
 
 
   exposed-modules:     Tine
+                       Tine.Data.Pin
+                       Tine.Process
 
 test-suite test
   type:                exitcode-stdio-1.0
