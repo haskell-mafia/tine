@@ -1,6 +1,7 @@
 {-# LANGUAGE NoImplicitPrelude #-}
 module Tine.Process (
     ProcessOrPin (..)
+  , processOrPin
   , execProcess
   , execProcessOrPin
   , execProcessOrTerminateOnPin
@@ -32,6 +33,12 @@ import           Tine.Snooze
 data ProcessOrPin =
   ProcessStopped ExitCode | PinPulled ProcessHandle
 
+processOrPin :: (ExitCode -> a) -> (ProcessHandle -> a) -> ProcessOrPin -> a
+processOrPin f _ (ProcessStopped e) =
+  f e
+processOrPin _ f  (PinPulled h) =
+  f h
+
 execProcess :: CreateProcess -> IO ExitCode
 execProcess p =
   fmap pickHandle (createProcess p) >>= waitForProcess
@@ -42,19 +49,11 @@ execProcessOrPin pin p =
 
 execProcessOrTerminateOnPin :: Pin -> CreateProcess -> IO ExitCode
 execProcessOrTerminateOnPin pin p =
-  execProcessOrPin pin p >>= \pp -> case pp of
-    ProcessStopped e ->
-      pure e
-    PinPulled h ->
-      terminate h
+  execProcessOrPin pin p >>= processOrPin pure terminate
 
 execProcessOrTerminateGroupOnPin :: Pin -> CreateProcess -> IO ExitCode
 execProcessOrTerminateGroupOnPin pin p =
-  execProcessOrPin pin p { create_group = True } >>= \pp -> case pp of
-    ProcessStopped e ->
-      pure e
-    PinPulled h ->
-      terminateGroup h
+  execProcessOrPin pin p { create_group = True } >>= processOrPin pure terminateGroup
 
 waitForProcessOrPin :: Pin -> ProcessHandle -> IO ProcessOrPin
 waitForProcessOrPin pin h =
@@ -104,10 +103,7 @@ stopWith sig pid' = go (5 :: Int)
               check $
                 go $ n - 1
         check f = do
-          st <- getProcessStatus False True pid'
-          case st of
-            Nothing -> f
-            Just _ -> pure sigTERM
+          getProcessStatus False True pid' >>= maybe f (const . pure $ sigTERM)
 
 pickHandle :: (a, b, c, d) -> d
 pickHandle (_, _, _, d) =
