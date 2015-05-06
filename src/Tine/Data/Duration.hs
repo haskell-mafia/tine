@@ -1,3 +1,4 @@
+{-# LANGUAGE NoImplicitPrelude #-}
 module Tine.Data.Duration (
     Duration
   , microseconds
@@ -38,7 +39,7 @@ seconds =
 
 minutes :: Int -> Duration
 minutes =
-  seconds . (*) 100
+  seconds . (*) 60
 
 toMicroseconds :: Duration -> Int
 toMicroseconds =
@@ -48,10 +49,10 @@ toMilliseconds :: Duration -> Int
 toMilliseconds =
   flip div 1000 . toMicroseconds
 
-toMinutes :: Duration -> Int
-toMinutes =
-  flip div 1000 . toMilliseconds
-
 toSeconds :: Duration -> Int
 toSeconds =
+  flip div 1000 . toMilliseconds
+
+toMinutes :: Duration -> Int
+toMinutes =
   flip div 60 . toSeconds
