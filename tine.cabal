@@ -32,13 +32,36 @@ library
 
 
   exposed-modules:     Tine
+                       Tine.Data.Duration
                        Tine.Data.Pin
                        Tine.Process
+                       Tine.Snooze
 
 test-suite test
   type:                exitcode-stdio-1.0
 
   main-is:             test.hs
+
+  ghc-options:         -Wall -threaded -O2
+
+  hs-source-dirs:
+                       test
+
+  build-depends:
+                       base                            >= 3          && < 5
+                     , orphanarium-core
+                     , orphanarium-corpus
+                     , p
+                     , text
+                     , time
+                     , QuickCheck
+                     , quickcheck-instances            == 0.3.*
+                     , tine
+
+test-suite test-io
+  type:                exitcode-stdio-1.0
+
+  main-is:             test-io.hs
 
   ghc-options:         -Wall -threaded -O2
 
