@@ -3,6 +3,8 @@ module Tine.Process (
     ProcessOrPin (..)
   , execProcess
   , execProcessOrPin
+  , execProcessOrTerminateOnPin
+  , execProcessOrTerminateGroupOnPin
   , waitForProcessOrPin
   , exitLeft
   , signalToExit
@@ -37,6 +39,22 @@ execProcess p =
 execProcessOrPin :: Pin -> CreateProcess -> IO ProcessOrPin
 execProcessOrPin pin p =
   fmap pickHandle (createProcess p) >>= waitForProcessOrPin pin
+
+execProcessOrTerminateOnPin :: Pin -> CreateProcess -> IO ExitCode
+execProcessOrTerminateOnPin pin p =
+  execProcessOrPin pin p >>= \pp -> case pp of
+    ProcessStopped e ->
+      pure e
+    PinPulled h ->
+      terminate h
+
+execProcessOrTerminateGroupOnPin :: Pin -> CreateProcess -> IO ExitCode
+execProcessOrTerminateGroupOnPin pin p =
+  execProcessOrPin pin p { create_group = True } >>= \pp -> case pp of
+    ProcessStopped e ->
+      pure e
+    PinPulled h ->
+      terminateGroup h
 
 waitForProcessOrPin :: Pin -> ProcessHandle -> IO ProcessOrPin
 waitForProcessOrPin pin h =
