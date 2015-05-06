@@ -16,10 +16,6 @@ import           Test.QuickCheck
 
 import           Tine.Snooze
 
---
--- Snooze
---
-
 prop_snooze = forAll (choose (1, 3)) $ \n -> testIO $ do
   s <- getCurrentTime
   snooze . seconds $ n
