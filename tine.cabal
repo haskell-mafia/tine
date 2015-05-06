@@ -32,6 +32,7 @@ library
 
 
   exposed-modules:     Tine
+                       Tine.Data
                        Tine.Data.Duration
                        Tine.Data.Pin
                        Tine.Process
@@ -54,9 +55,10 @@ test-suite test
                      , p
                      , text
                      , time
+                     , tine
                      , QuickCheck
                      , quickcheck-instances            == 0.3.*
-                     , tine
+                     , unix
 
 test-suite test-io
   type:                exitcode-stdio-1.0
@@ -70,11 +72,13 @@ test-suite test-io
 
   build-depends:
                        base                            >= 3          && < 5
+                     , exceptions
                      , orphanarium-core
                      , orphanarium-corpus
                      , p
                      , text
                      , time
+                     , tine
                      , QuickCheck
                      , quickcheck-instances            == 0.3.*
-                     , tine
+                     , unix
