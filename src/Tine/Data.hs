@@ -1,7 +1,5 @@
 module Tine.Data (
-    module Tine.Data.Duration
-  , module Tine.Data.Pin
+    module Twine.Data.Pin
   ) where
 
-import           Tine.Data.Duration
-import           Tine.Data.Pin
+import           Twine.Data.Pin

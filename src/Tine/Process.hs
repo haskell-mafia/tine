@@ -27,7 +27,8 @@ import           System.Posix.Signals
 import           System.Posix.Types
 
 import           Tine.Data
-import           Tine.Snooze
+import           Twine.Data
+import           Twine.Snooze
 
 
 data ProcessOrPin =
