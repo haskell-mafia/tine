@@ -22,6 +22,7 @@ library
                      , template-haskell
                      , transformers                    >= 0.3     && < 0.5
                      , time                            == 1.4.*
+                     , twine
                      , unix                            == 2.7.*
 
   ghc-options:
@@ -33,10 +34,7 @@ library
 
   exposed-modules:     Tine
                        Tine.Data
-                       Tine.Data.Duration
-                       Tine.Data.Pin
                        Tine.Process
-                       Tine.Snooze
 
 test-suite test
   type:                exitcode-stdio-1.0
@@ -56,6 +54,7 @@ test-suite test
                      , text
                      , time
                      , tine
+                     , twine
                      , QuickCheck
                      , quickcheck-instances            == 0.3.*
                      , unix
@@ -79,6 +78,7 @@ test-suite test-io
                      , text
                      , time
                      , tine
+                     , twine
                      , QuickCheck
                      , quickcheck-instances            == 0.3.*
                      , unix
