@@ -7,7 +7,7 @@ copyright:             (c) 2015 Ambiata.
 synopsis:              Combinators for process
 category:              System
 cabal-version:         >= 1.8
-build-type:            Custom
+build-type:            Simple
 description:           Combinators for process
 
 library
@@ -48,8 +48,8 @@ test-suite test
 
   build-depends:
                        base                            >= 3          && < 5
-                     , orphanarium-core
-                     , orphanarium-corpus
+                     , disorder-core
+                     , disorder-corpus
                      , p
                      , text
                      , time
@@ -71,9 +71,9 @@ test-suite test-io
 
   build-depends:
                        base                            >= 3          && < 5
+                     , disorder-core
+                     , disorder-corpus
                      , exceptions
-                     , orphanarium-core
-                     , orphanarium-corpus
                      , p
                      , text
                      , time
