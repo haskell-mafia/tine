@@ -5,7 +5,7 @@ module Test.IO.Tine.Process where
 
 import           Control.Monad.Catch
 
-import           Orphanarium.Core.IO
+import           Disorder.Core.IO
 
 import           P
 

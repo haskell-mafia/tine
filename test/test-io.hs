@@ -1,9 +1,9 @@
-import           Orphanarium.Core.Main
+import           Disorder.Core.Main
 
 import qualified Test.IO.Tine.Process
 
 main :: IO ()
 main =
-  orphanariumMain [
+  disorderMain [
       Test.IO.Tine.Process.tests
     ]
