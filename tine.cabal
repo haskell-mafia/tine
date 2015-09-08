@@ -1,4 +1,4 @@
-name:                  tine
+name:                  ambiata-tine
 version:               0.0.1
 license:               AllRightsReserved
 author:                Ambiata <info@ambiata.com>
@@ -13,16 +13,16 @@ description:           Combinators for process
 library
   build-depends:
                        base                            >= 3          && < 5
+                     , ambiata-p
+                     , ambiata-twine
                      , bytestring                      == 0.10.*
                      , either                          == 4.3.*
                      , lens                            == 4.9.*
-                     , p
                      , process                         == 1.2.*
                      , text                            == 1.2.*
                      , template-haskell
                      , transformers                    >= 0.3     && < 0.5
                      , time                            == 1.4.*
-                     , twine
                      , unix                            == 2.7.*
 
   ghc-options:
@@ -48,13 +48,13 @@ test-suite test
 
   build-depends:
                        base                            >= 3          && < 5
-                     , disorder-core
-                     , disorder-corpus
-                     , p
+                     , ambiata-disorder-core
+                     , ambiata-disorder-corpus
+                     , ambiata-p
+                     , ambiata-tine
+                     , ambiata-twine
                      , text
                      , time
-                     , tine
-                     , twine
                      , QuickCheck
                      , quickcheck-instances            == 0.3.*
                      , unix
@@ -71,14 +71,14 @@ test-suite test-io
 
   build-depends:
                        base                            >= 3          && < 5
-                     , disorder-core
-                     , disorder-corpus
+                     , ambiata-disorder-core
+                     , ambiata-disorder-corpus
                      , exceptions
-                     , p
+                     , ambiata-p
+                     , ambiata-tine
+                     , ambiata-twine
                      , text
                      , time
-                     , tine
-                     , twine
                      , QuickCheck
                      , quickcheck-instances            == 0.3.*
                      , unix
