@@ -1,4 +1,4 @@
-name:                  tine
+name:                  ambiata-tine
 version:               0.0.1
 license:               AllRightsReserved
 author:                Ambiata <info@ambiata.com>
@@ -51,7 +51,7 @@ test-suite test
                      , ambiata-disorder-core
                      , ambiata-disorder-corpus
                      , ambiata-p
-                     , tine
+                     , ambiata-tine
                      , ambiata-twine
                      , text
                      , time
@@ -75,7 +75,7 @@ test-suite test-io
                      , ambiata-disorder-corpus
                      , exceptions
                      , ambiata-p
-                     , tine
+                     , ambiata-tine
                      , ambiata-twine
                      , text
                      , time
