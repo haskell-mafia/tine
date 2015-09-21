@@ -17,11 +17,11 @@ library
                      , ambiata-twine
                      , bytestring                      == 0.10.*
                      , either                          == 4.3.*
-                     , lens                            == 4.9.*
+                     , lens                            >= 4.8        && < 4.10
                      , process                         == 1.2.*
                      , text                            == 1.2.*
                      , template-haskell
-                     , transformers                    >= 0.3     && < 0.5
+                     , transformers                    >= 0.3        && < 0.5
                      , time                            == 1.4.*
                      , unix                            == 2.7.*
 
