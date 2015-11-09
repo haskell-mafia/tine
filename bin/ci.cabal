@@ -5,8 +5,8 @@ export LANG=en_US.UTF-8
 
 cabal sandbox delete
 
-./cabal update
-./cabal build
+./mafia update
+./mafia build
 cabal install
 
 (
