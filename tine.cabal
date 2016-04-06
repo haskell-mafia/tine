@@ -7,7 +7,7 @@ copyright:             (c) 2015 Ambiata.
 synopsis:              Combinators for process
 category:              System
 cabal-version:         >= 1.8
-build-type:            Simple
+build-type:            Custom
 description:           Combinators for process
 
 library
