@@ -58,8 +58,10 @@ test-suite test
                      , ambiata-tine
                      , ambiata-twine
                      , ambiata-x-eithert
+                     , conduit
                      , text
                      , time
+                     , process
                      , QuickCheck
                      , quickcheck-instances            == 0.3.*
                      , unix
@@ -82,6 +84,9 @@ test-suite test-io
                      , ambiata-p
                      , ambiata-tine
                      , ambiata-twine
+                     , ambiata-x-eithert
+                     , conduit
+                     , process
                      , text
                      , time
                      , QuickCheck
