@@ -15,7 +15,11 @@ library
                        base                            >= 3          && < 5
                      , ambiata-p
                      , ambiata-twine
+                     , ambiata-x-eithert
+                     , async                           >= 2.0        && < 2.2
                      , bytestring                      == 0.10.*
+                     , conduit                         == 1.2.*
+                     , conduit-extra                   == 1.1.*
                      , lens                            >= 4.8        && < 4.15
                      , process                         >= 1.2        && < 1.5
                      , text                            == 1.2.*
@@ -26,12 +30,15 @@ library
 
   ghc-options:
                        -Wall
+  if impl(ghc >= 8.0)
+    ghc-options:       -fno-warn-redundant-constraints
 
   hs-source-dirs:
                        src
 
 
-  exposed-modules:     Tine
+  exposed-modules:
+                       Tine.Conduit
                        Tine.Data
                        Tine.Process
 
@@ -52,8 +59,11 @@ test-suite test
                      , ambiata-p
                      , ambiata-tine
                      , ambiata-twine
+                     , ambiata-x-eithert
+                     , conduit
                      , text
                      , time
+                     , process
                      , QuickCheck
                      , quickcheck-instances            == 0.3.*
                      , unix
@@ -76,6 +86,9 @@ test-suite test-io
                      , ambiata-p
                      , ambiata-tine
                      , ambiata-twine
+                     , ambiata-x-eithert
+                     , conduit
+                     , process
                      , text
                      , time
                      , QuickCheck
