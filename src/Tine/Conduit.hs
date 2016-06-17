@@ -3,10 +3,12 @@
 module Tine.Conduit (
     Out
   , WithEnv (..)
+  , StreamingProcessOrPin (..)
   , xPutStrLn
   , capture
   , exec
   , raw
+  , execOrTerminateOnPin
   , xproc
   , xprocAt
   , inDirectory
@@ -15,7 +17,7 @@ module Tine.Conduit (
   , withEnv
   ) where
 
-import           Control.Concurrent.Async (Concurrently (..))
+import           Control.Concurrent.Async (Concurrently (..), async, cancel, waitEither)
 import           Control.Monad.Trans.Class (lift)
 import           Control.Monad.IO.Class (MonadIO (..))
 
@@ -34,6 +36,9 @@ import           System.Exit (ExitCode (..))
 import           System.IO (IO, FilePath)
 import           System.Process (CreateProcess (..), proc)
 
+import           Tine.Process (terminate)
+import           Twine.Data.Pin (Pin, waitForPin)
+
 import           X.Control.Monad.Trans.Either (EitherT, left)
 
 data WithEnv =
@@ -43,6 +48,12 @@ data WithEnv =
 
 type Out =
   Sink ByteString IO ()
+
+data StreamingProcessOrPin =
+    StreamingProcessStopped ExitCode
+  | StreamingPinPulled ExitCode
+    deriving (Eq, Show)
+
 
 xPutStrLn :: MonadIO m => Out -> Text -> m ()
 xPutStrLn o t =
@@ -74,6 +85,26 @@ raw cout cerr cp = do
       <$> Concurrently (sout $$ cout)
       <*> Concurrently (serr $$ cerr)
       <*> Concurrently (CP.waitForStreamingProcess handle)
+
+
+execOrTerminateOnPin :: Pin -> Sink ByteString IO () -> Sink ByteString IO () -> CreateProcess -> IO StreamingProcessOrPin
+execOrTerminateOnPin pin cout cerr cp = do
+  (CP.ClosedStream, sout, serr, handle) <- CP.streamingProcess cp
+
+  execing <- async . runConcurrently $
+    (,,)
+      <$> Concurrently (sout $$ cout)
+      <*> Concurrently (serr $$ cerr)
+      <*> Concurrently (CP.waitForStreamingProcess handle)
+
+  checking <- async $ waitForPin pin
+
+  waitEither checking execing >>= \x -> case x of
+    Left _ ->
+      StreamingPinPulled <$> terminate (CP.streamingProcessHandleRaw handle) <* cancel execing
+    Right (_, _, code) ->
+      StreamingProcessStopped code <$ cancel checking
+
 
 xproc :: Out -> Text -> [Text] -> IO CreateProcess
 xproc out cmd args = do
