@@ -16,6 +16,7 @@ module Tine.Process (
   , module System.Process
   ) where
 
+import           Control.Monad.Catch (catchIOError)
 import           P
 
 import           System.Exit
@@ -104,7 +105,9 @@ stopWith sig pid' = go (5 :: Int)
               check $
                 go $ n - 1
         check f = do
-          getProcessStatus False True pid' >>= maybe f (const . pure $ sigTERM)
+          getProcessStatus False True pid' `catchIOError`
+            (const . pure . pure $ Stopped sigTERM) >>=
+              maybe f (const . pure $ sigTERM)
 
 pickHandle :: (a, b, c, d) -> d
 pickHandle (_, _, _, d) =
