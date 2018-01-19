@@ -21,7 +21,7 @@ library
                      , conduit                         == 1.2.*
                      , conduit-extra                   == 1.1.*
                      , exceptions                      >= 0.6        && < 0.9
-                     , lens                            >= 4.8        && < 4.15
+                     , lens                            >= 4.8        && < 4.16
                      , process                         >= 1.2        && < 1.5
                      , text                            == 1.2.*
                      , template-haskell
