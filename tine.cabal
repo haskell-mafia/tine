@@ -26,7 +26,7 @@ library
                      , text                            == 1.2.*
                      , template-haskell
                      , transformers                    >= 0.3        && < 0.6
-                     , time                            >= 1.4        && < 1.7
+                     , time                            >= 1.4        && < 1.9
                      , unix                            == 2.7.*
 
   ghc-options:
